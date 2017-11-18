@@ -160,38 +160,7 @@ def chunks(l, n):
     for i in range(0, len(l), n):
         yield l[i:i + n]
 
-def parse2(filename):
-
-    column_names = ["id",
-    "region_id",
-    "category_id",
-    "subregion_id",
-    "district_id",
-    "city_id",
-    "accurate_location",
-    "user_id",
-    "sorting_date",
-    "created_at_first",
-    "valid_to",
-    "title",
-    "description",
-    "full_description",
-    "has_phone",
-    "params",
-    "private_business",
-    "has_person",
-    "photo_sizes",
-    "paidads_id_index",
-    "paidads_valid_to",
-    "predict_sold",
-    "predict_replies",
-    "predict_views",
-    "reply_call",
-    "reply_sms",
-    "reply_chat",
-    "reply_call_intent",
-    "reply_chat_intent"]
-
+def parse2(filename, entry_num):
 
     with open(filename) as infile:
         columns = infile.read()
@@ -202,13 +171,16 @@ def parse2(filename):
         for item in split:
             if(counter == 29):
                     entry[0] = entry[0].strip('"')
-                    print(entry)
+                    #print(entry)
                     entries = map(replace_f_t, entry)
                     if entry_counter != 0:
                         add_new_entry(tuple(entries))
                     entry = []
                     counter = 0
-                    entry_counter+=1
+                    entry_counter += 1
+                    if entry_counter == entry_num:
+                        conn.commit()
+                        return
             entry.append(item)
             counter += 1
         conn.commit()
