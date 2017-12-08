@@ -1,14 +1,17 @@
 import _sqlite3
-from db import db_path
+
 
 def create_categories_table(conn):
+    """
+    Creates categories table in sqlite database
+    :param conn: connection to sqlite database
+    """
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE categories (
                        category_id integer primary key,
                        name text not null,
                        parent_id int default null)""")
     conn.commit()
-    return
 
 
 def create_ads_table(conn):
@@ -84,5 +87,4 @@ def create_all_dbs():
     return
 
 
-#create_all_dbs()
 
