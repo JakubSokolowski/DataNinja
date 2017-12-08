@@ -13,8 +13,9 @@ def parse_categories(path):
     """
     Reads all the categories from categories.csv file and inserts them
     into categories table in database specified by path.
-    :param path: The path to the database.
-    :type path: str.
+
+    :param path: The path to the database
+    :type path: str
 
     """
 
@@ -36,6 +37,7 @@ def parse_categories(path):
 def replace_f_t(x):
     """
     Replaces strings f and t into binary equivalents 1 and 0.
+
     :param x: The string to replace.
     :return: The replaced string.
     """
@@ -52,6 +54,7 @@ def parse_ads(db_name):
     Parses ads from 001_anonimized file for given month and inserts them into
     database. File and database are specified by db_name
     The full path is created by joining the db.db_path with db_name
+
     :param db_name: The name to the database
     :type db_name: str
 
@@ -112,9 +115,9 @@ def extract_date(path_str):
     """
     Extracts the date from end of the path_str and converts it to sqlite datetime format.
 
-    :param path_str: The path that ends with date in YYYY_MM_DD format.
-    :type path_str: str.
-    :returns: The date in YYYY-MM-DD sqlite datetime format.
+    :param path_str: The path that ends with date in YYYY_MM_DD format
+    :type path_str: str
+    :returns: The date in YYYY-MM-DD sqlite datetime format
     """
     path_str = path_str.replace('_', '-')
     path_str = path_str.split('.')[0]
@@ -126,10 +129,10 @@ def parse_day_queries(path, conn):
     Parsers all the .csv search queries for given day and inserts them into database
     specified by conn.
 
-    :param path: The path with day's search_queries.
-    :type path str.
-    :param conn: The connection to the database.
-    :type conn: sqlite3.Connection.
+    :param path: The path with day's search_queries
+    :type path: str
+    :param conn: The connection to the database
+    :type conn: sqlite3.Connection
     """
 
     cursor = conn.cursor()
@@ -171,7 +174,8 @@ def parse_queries(db_name):
 def fill_db(db_name):
     """
     Inserts all the data for given month into the database specified by the db_name.
-    :param db_name: The name of the database.
+
+    :param db_name: The name of the database
 
     """
     parse_categories(db_name)
@@ -182,4 +186,3 @@ def fill_db(db_name):
 
 def fill_all_dbs():
     return
-
