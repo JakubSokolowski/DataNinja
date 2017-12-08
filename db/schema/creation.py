@@ -1,10 +1,14 @@
 import _sqlite3
+from db import db_path
 
 
 def create_categories_table(conn):
     """
-    Creates categories table in sqlite database
-    :param conn: connection to sqlite database
+    Creates table that holds all the product categories in sqlite database specified by conn.
+
+    :param conn: The connection to sqlite database.
+    :type conn: sqlite3.Connection.
+
     """
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE categories (
@@ -15,6 +19,13 @@ def create_categories_table(conn):
 
 
 def create_ads_table(conn):
+    """
+    Creates table that holds ads from one month in sqlite database specified by conn.
+
+    :param conn: The connection to sqlite database.
+    :type conn: sqlite3.Connection.
+
+    """
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE ads (
                                id integer primary key,
@@ -47,10 +58,18 @@ def create_ads_table(conn):
                                reply_call_intent integer,
                                reply_chat_intent integer) 
                                """)
-    return
 
 
 def create_search_queries_table(conn):
+    """
+    Creates table that holds all the search queries from one month
+    in sqlite database specified by connection.
+
+    :param conn: The connection to sqlite database.
+    :type conn: sqlite3.Connection.
+
+    """
+
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE queries (
                            phrase text,
@@ -61,19 +80,29 @@ def create_search_queries_table(conn):
 
 
 def create_db(conn):
+    """
+    Creates ads, categories and queries tables in database specified by connection and
+    closes that connection.
+
+    :param conn: The connection to sqlite database.
+    :type conn: sqlite3.Connection.
+
+    """
     create_categories_table(conn)
     create_ads_table(conn)
     create_search_queries_table(conn)
     conn.close()
-    pass
 
 
 def create_all_dbs():
-    db_path = '/home/jakub/DataNinja/data/database/'
+    """
+    Creates all databases for months from 2016_11 to 2017_10.
+
+    """
 
     db_name = '2016_1#.db'
-    for i in range(1,3):
-        path = db_path + str.replace(db_name, '#',str(i))
+    for i in range(1, 3):
+        path = db_path + str.replace(db_name, '#', str(i))
         create_db(_sqlite3.connect(path))
 
     db_name = '2017_0#.db'
@@ -83,8 +112,5 @@ def create_all_dbs():
 
     db_name = '2017_10.db'
     create_db(_sqlite3.connect(db_path + db_name))
-
-    return
-
 
 

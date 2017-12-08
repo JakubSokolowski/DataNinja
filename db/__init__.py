@@ -1,4 +1,3 @@
-import _sqlite3
 
 db_name =''
 db_path = '/home/jakub/DataNinja/data/database/'

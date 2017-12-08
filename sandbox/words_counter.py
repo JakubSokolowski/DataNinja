@@ -39,7 +39,8 @@ SELECT
              FROM cte
     
        ) LIMIT 1000"""
- 
+
+
 def words_counter(command):
     word_dict=dict()
     for row in cursor.execute(command):
