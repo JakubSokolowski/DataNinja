@@ -5,10 +5,12 @@ Created on Wed Dec  6 19:49:39 2017
 @author: Adrian
 """
 
-text = """{"1":{"w":934,"h":700},"2":{"w":934,"h":700},"3":{"w":934,"h":700}}"""
 
 import json
 from pprint import pprint
+
+text = """{"1":{"w":934,"h":700},"2":{"w":934,"h":700},"3":{"w":934,"h":700}}"""
+
 
 data = json.loads(text)
 pprint(data)
