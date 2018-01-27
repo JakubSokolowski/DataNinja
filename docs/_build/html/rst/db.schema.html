@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>db.schema package &#8212; DataNinja 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css"/>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html"/>
+    <link rel="search" title="Search" href="../search.html"/>
+</head>
+<body>
+<div class="related" role="navigation" aria-label="related navigation">
+    <h3>Navigation</h3>
+    <ul>
+        <li class="right" style="margin-right: 10px">
+            <a href="../genindex.html" title="General Index"
+               accesskey="I">index</a></li>
+        <li class="right">
+            <a href="../py-modindex.html" title="Python Module Index"
+            >modules</a> |
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">DataNinja 1.0 documentation</a> &#187;</li>
+    </ul>
+</div>
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <div class="section" id="db-schema-package">
+                    <h1>db.schema package<a class="headerlink" href="#db-schema-package"
+                                            title="Permalink to this headline">¶</a></h1>
+                    <div class="section" id="submodules">
+                        <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a>
+                        </h2>
+                    </div>
+                    <div class="section" id="module-db.schema.creation">
+                        <span id="db-schema-creation-module"></span>
+                        <h2>db.schema.creation module<a class="headerlink" href="#module-db.schema.creation"
+                                                        title="Permalink to this headline">¶</a></h2>
+                        <dl class="function">
+                            <dt id="db.schema.creation.create_ads_table">
+                                <code class="descclassname">db.schema.creation.</code><code class="descname">create_ads_table</code><span
+                                    class="sig-paren">(</span><em>conn</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/creation.html#create_ads_table"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.creation.create_ads_table"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Creates table that holds ads from one month in sqlite database specified by conn.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>conn</strong> (<em>sqlite3.Connection.</em>) –
+                                            The connection to sqlite database.
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.creation.create_all_dbs">
+                                <code class="descclassname">db.schema.creation.</code><code class="descname">create_all_dbs</code><span
+                                    class="sig-paren">(</span><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/creation.html#create_all_dbs"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.creation.create_all_dbs"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Creates all databases for months from 2016_11 to 2017_10.</p>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.creation.create_categories_table">
+                                <code class="descclassname">db.schema.creation.</code><code class="descname">create_categories_table</code><span
+                                    class="sig-paren">(</span><em>conn</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/creation.html#create_categories_table"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.creation.create_categories_table"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Creates table that holds all the product categories in sqlite database specified by
+                                conn.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>conn</strong> (<em>sqlite3.Connection.</em>) –
+                                            The connection to sqlite database.
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.creation.create_db">
+                                <code class="descclassname">db.schema.creation.</code><code
+                                    class="descname">create_db</code><span class="sig-paren">(</span><em>conn</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="../_modules/db/schema/creation.html#create_db"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.creation.create_db"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Creates ads, categories and queries tables in database specified by connection and
+                                closes that connection.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>conn</strong> (<em>sqlite3.Connection.</em>) –
+                                            The connection to sqlite database.
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.creation.create_search_queries_table">
+                                <code class="descclassname">db.schema.creation.</code><code class="descname">create_search_queries_table</code><span
+                                    class="sig-paren">(</span><em>conn</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/creation.html#create_search_queries_table"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.creation.create_search_queries_table"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Creates table that holds all the search queries from one month
+                                in sqlite database specified by connection.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>conn</strong> (<em>sqlite3.Connection.</em>) –
+                                            The connection to sqlite database.
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-db.schema.parser">
+                        <span id="db-schema-parser-module"></span>
+                        <h2>db.schema.parser module<a class="headerlink" href="#module-db.schema.parser"
+                                                      title="Permalink to this headline">¶</a></h2>
+                        <dl class="function">
+                            <dt id="db.schema.parser.extract_date">
+                                <code class="descclassname">db.schema.parser.</code><code
+                                    class="descname">extract_date</code><span
+                                    class="sig-paren">(</span><em>path_str</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/parser.html#extract_date"><span class="viewcode-link">[source]</span></a><a
+                                    class="headerlink" href="#db.schema.parser.extract_date"
+                                    title="Permalink to this definition">¶</a></dt>
+                            <dd><p>Extracts the date from end of the path_str and converts it to sqlite datetime
+                                format.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>path_str</strong> (<em>str</em>) – The path that
+                                            ends with date in YYYY_MM_DD format
+                                        </td>
+                                    </tr>
+                                    <tr class="field-even field">
+                                        <th class="field-name">Returns:</th>
+                                        <td class="field-body">The date in YYYY-MM-DD sqlite datetime format</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.fill_all_dbs">
+                                <code class="descclassname">db.schema.parser.</code><code
+                                    class="descname">fill_all_dbs</code><span class="sig-paren">(</span><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="../_modules/db/schema/parser.html#fill_all_dbs"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.parser.fill_all_dbs"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd></dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.fill_db">
+                                <code class="descclassname">db.schema.parser.</code><code
+                                    class="descname">fill_db</code><span class="sig-paren">(</span><em>db_name</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="../_modules/db/schema/parser.html#fill_db"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.parser.fill_db"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Inserts all the data for given month into the database specified by the db_name.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>db_name</strong> – The name of the database</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.parse_ads">
+                                <code class="descclassname">db.schema.parser.</code><code
+                                    class="descname">parse_ads</code><span
+                                    class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a
+                                    class="reference internal" href="../_modules/db/schema/parser.html#parse_ads"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.parser.parse_ads"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Parses ads from 001_anonimized file for given month and inserts them into
+                                database. File and database are specified by db_name
+                                The full path is created by joining the db.db_path with db_name</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>db_name</strong> (<em>str</em>) – The name to the
+                                            database
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.parse_categories">
+                                <code class="descclassname">db.schema.parser.</code><code class="descname">parse_categories</code><span
+                                    class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/parser.html#parse_categories"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.parser.parse_categories"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Reads all the categories from categories.csv file and inserts them
+                                into categories table in database specified by path.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>path</strong> (<em>str</em>) – The path to the
+                                            database
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.parse_day_queries">
+                                <code class="descclassname">db.schema.parser.</code><code class="descname">parse_day_queries</code><span
+                                    class="sig-paren">(</span><em>path</em>, <em>conn</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="../_modules/db/schema/parser.html#parse_day_queries"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.parser.parse_day_queries"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Parsers all the .csv search queries for given day and inserts them into database
+                                specified by conn.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body">
+                                            <ul class="first last simple">
+                                                <li><strong>path</strong> (<em>str</em>) – The path with day’s
+                                                    search_queries
+                                                </li>
+                                                <li><strong>conn</strong> (<em>sqlite3.Connection</em>) – The connection
+                                                    to the database
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.parse_queries">
+                                <code class="descclassname">db.schema.parser.</code><code
+                                    class="descname">parse_queries</code><span
+                                    class="sig-paren">(</span><em>db_name</em><span class="sig-paren">)</span><a
+                                    class="reference internal"
+                                    href="../_modules/db/schema/parser.html#parse_queries"><span class="viewcode-link">[source]</span></a><a
+                                    class="headerlink" href="#db.schema.parser.parse_queries"
+                                    title="Permalink to this definition">¶</a></dt>
+                            <dd><p>Parses all the search queries for given month from 14th to the end of the month
+                                ands inserts them into the database specified by db_name. The changes are commited
+                                after inserting all the search queries from the month.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>db_name</strong> – The name of the database</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                        <dl class="function">
+                            <dt id="db.schema.parser.replace_f_t">
+                                <code class="descclassname">db.schema.parser.</code><code
+                                    class="descname">replace_f_t</code><span class="sig-paren">(</span><em>x</em><span
+                                    class="sig-paren">)</span><a class="reference internal"
+                                                                 href="../_modules/db/schema/parser.html#replace_f_t"><span
+                                    class="viewcode-link">[source]</span></a><a class="headerlink"
+                                                                                href="#db.schema.parser.replace_f_t"
+                                                                                title="Permalink to this definition">¶</a>
+                            </dt>
+                            <dd><p>Replaces strings f and t into binary equivalents 1 and 0.</p>
+                                <table class="docutils field-list" frame="void" rules="none">
+                                    <col class="field-name"/>
+                                    <col class="field-body"/>
+                                    <tbody valign="top">
+                                    <tr class="field-odd field">
+                                        <th class="field-name">Parameters:</th>
+                                        <td class="field-body"><strong>x</strong> – The string to replace.</td>
+                                    </tr>
+                                    <tr class="field-even field">
+                                        <th class="field-name">Returns:</th>
+                                        <td class="field-body">The replaced string.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </dd>
+                        </dl>
+
+                    </div>
+                    <div class="section" id="module-db.schema">
+                        <span id="module-contents"></span>
+                        <h2>Module contents<a class="headerlink" href="#module-db.schema"
+                                              title="Permalink to this headline">¶</a></h2>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Quick search</h3>
+                <form class="search" action="../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Go"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="related" role="navigation" aria-label="related navigation">
+    <h3>Navigation</h3>
+    <ul>
+        <li class="right" style="margin-right: 10px">
+            <a href="../genindex.html" title="General Index"
+            >index</a></li>
+        <li class="right">
+            <a href="../py-modindex.html" title="Python Module Index"
+            >modules</a> |
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">DataNinja 1.0 documentation</a> &#187;</li>
+    </ul>
+</div>
+<div class="footer" role="contentinfo">
+    &#169; Copyright 2017, Goodfellas.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+</div>
+</body>
+</html>

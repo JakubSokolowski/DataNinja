@@ -1,0 +1,30 @@
+db\.schema package
+==================
+
+Submodules
+----------
+
+db\.schema\.creation module
+---------------------------
+
+.. automodule:: db.schema.creation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+db\.schema\.parser module
+-------------------------
+
+.. automodule:: db.schema.parser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: db.schema
+    :members:
+    :undoc-members:
+    :show-inheritance:

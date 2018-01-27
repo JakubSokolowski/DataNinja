@@ -1,0 +1,18 @@
+db package
+==========
+
+Subpackages
+-----------
+
+.. toctree::
+
+    db.queries
+    db.schema
+
+Module contents
+---------------
+
+.. automodule:: db
+    :members:
+    :undoc-members:
+    :show-inheritance:

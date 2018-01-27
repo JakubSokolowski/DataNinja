@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>db.schema.parser &#8212; DataNinja 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html"/>
+    <link rel="search" title="Search" href="../../../search.html"/>
+</head>
+<body>
+<div class="related" role="navigation" aria-label="related navigation">
+    <h3>Navigation</h3>
+    <ul>
+        <li class="right" style="margin-right: 10px">
+            <a href="../../../genindex.html" title="General Index"
+               accesskey="I">index</a></li>
+        <li class="right">
+            <a href="../../../py-modindex.html" title="Python Module Index"
+            >modules</a> |
+        </li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">DataNinja 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+    </ul>
+</div>
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Source code for db.schema.parser</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">_sqlite3</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">db.queries.insertions</span> <span class="k">as</span> <span class="nn">q</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="k">import</span> <span class="n">db_path</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="k">import</span> <span
+                        class="n">categories_path</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="k">import</span> <span
+                        class="n">ads_data_path</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="k">import</span> <span class="n">search_queries_data_path</span>
+
+
+<div class="viewcode-block" id="parse_categories"><a class="viewcode-back"
+                                                     href="../../../rst/db.schema.html#db.schema.parser.parse_categories">[docs]</a><span
+        class="k">def</span> <span class="nf">parse_categories</span><span class="p">(</span><span class="n">path</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads all the categories from categories.csv file and inserts them</span>
+<span class="sd">    into categories table in database specified by path.</span>
+
+<span class="sd">    :param path: The path to the database</span>
+<span class="sd">    :type path: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">_sqlite3</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
+            class="n">cursor</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span
+            class="n">categories_path</span><span class="p">)</span> <span class="k">as</span> <span
+            class="n">infile</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span
+            class="n">reader</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+        <span class="n">first_line</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span
+            class="n">reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">first_line</span><span class="p">:</span>
+                <span class="n">first_line</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">continue</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="p">[</span><span
+            class="n">category</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span
+            class="n">category</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span
+            class="n">category</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">categories_insert</span><span
+            class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="nb">tuple</span><span
+            class="p">(</span><span class="n">record</span><span class="p">))</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="replace_f_t"><a class="viewcode-back"
+                                                href="../../../rst/db.schema.html#db.schema.parser.replace_f_t">[docs]</a><span
+        class="k">def</span> <span class="nf">replace_f_t</span><span class="p">(</span><span class="n">x</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replaces strings f and t into binary equivalents 1 and 0.</span>
+
+<span class="sd">    :param x: The string to replace.</span>
+<span class="sd">    :return: The replaced string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span
+            class="s2">&quot;f&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+    <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;t&quot;</span><span
+            class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;1&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="parse_ads"><a class="viewcode-back"
+                                              href="../../../rst/db.schema.html#db.schema.parser.parse_ads">[docs]</a><span
+        class="k">def</span> <span class="nf">parse_ads</span><span class="p">(</span><span
+        class="n">db_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses ads from 001_anonimized file for given month and inserts them into</span>
+<span class="sd">    database. File and database are specified by db_name</span>
+<span class="sd">    The full path is created by joining the db.db_path with db_name</span>
+
+<span class="sd">    :param db_name: The name to the database</span>
+<span class="sd">    :type db_name: str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">_sqlite3</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">(</span><span class="n">db_path</span> <span
+            class="o">+</span> <span class="n">db_name</span><span class="p">)</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
+            class="n">cursor</span><span class="p">()</span>
+
+    <span class="n">db_name</span> <span class="o">=</span> <span class="n">ads_data_path</span><span class="o">.</span><span
+            class="n">replace</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span
+            class="n">db_name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">db_name</span><span
+            class="p">)</span> <span class="k">as</span> <span class="n">infile</span><span class="p">:</span>
+        <span class="c1"># Read whole file at once</span>
+        <span class="n">file_string</span> <span class="o">=</span> <span class="n">infile</span><span
+            class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="c1"># Entry columns are separated by &quot;,&quot;</span>
+        <span class="c1"># Entries are separated by &quot;\n&quot;\</span>
+
+        <span class="c1"># Sometimes, there will be &quot;&quot;,&quot;&quot; used in product description, e.g &quot;Movie Title 2&quot;</span>
+        <span class="c1"># do not split on such cases</span>
+        <span class="n">all_columns</span> <span class="o">=</span> <span class="n">re</span><span
+            class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;(?&lt;![0-9a-zA-Z?! ]</span><span
+            class="se">\&quot;</span><span class="s1">)</span><span class="se">\&quot;</span><span
+            class="s1">,</span><span class="se">\&quot;</span><span class="s1">(?!</span><span class="se">\&quot;</span><span
+            class="s1">[0-9a-zA-Z])|(?&lt;!</span><span class="se">\n</span><span class="s1">)</span><span class="se">\&quot;\n\&quot;</span><span
+            class="s1">(?!</span><span class="se">\&quot;</span><span class="s1">)&#39;</span><span
+            class="p">,</span> <span class="n">file_string</span><span class="p">)</span>
+
+        <span class="n">entry</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">column_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">entry_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span
+            class="n">all_columns</span><span class="p">:</span>
+            <span class="c1"># There are 29 columns in entry</span>
+            <span class="k">if</span> <span class="n">column_counter</span> <span class="o">==</span> <span class="mi">29</span><span
+            class="p">:</span>
+                <span class="c1"># Sometimes there are leftover &quot; in first column</span>
+                <span class="c1"># get rid of them</span>
+                <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span
+            class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span
+            class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span
+            class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+
+                <span class="c1"># DEBUG - if there are any illegal chars in user product description</span>
+                <span class="c1"># it prints where they are so that we can fix/remove them</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span
+            class="p">)</span>
+
+                <span class="c1"># if is_date(entry[10]) and is_zero_or_one(entry[14]):</span>
+                <span class="c1">#    print(&quot;OK!&quot;)</span>
+
+                <span class="n">entries</span> <span class="o">=</span> <span class="nb">map</span><span
+            class="p">(</span><span class="n">replace_f_t</span><span class="p">,</span> <span
+            class="n">entry</span><span class="p">)</span>
+                <span class="c1"># Add the entry to the db</span>
+                <span class="c1"># WARNING - unfiltered tuple input, assuming that</span>
+                <span class="c1"># none of the OLX users is named DROP TABLE ADS</span>
+                <span class="k">if</span> <span class="n">entry_counter</span> <span class="o">!=</span> <span
+            class="mi">0</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">ads_insert</span><span
+            class="p">(</span><span class="n">cursor</span><span class="p">,</span> <span class="nb">tuple</span><span
+            class="p">(</span><span class="n">entries</span><span class="p">))</span>
+
+                <span class="n">entry</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">column_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="n">entry_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">entry</span><span class="o">.</span><span class="n">append</span><span
+            class="p">(</span><span class="n">column</span><span class="p">)</span>
+            <span class="n">column_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="extract_date"><a class="viewcode-back"
+                                                 href="../../../rst/db.schema.html#db.schema.parser.extract_date">[docs]</a><span
+        class="k">def</span> <span class="nf">extract_date</span><span class="p">(</span><span class="n">path_str</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts the date from end of the path_str and converts it to sqlite datetime format.</span>
+
+<span class="sd">    :param path_str: The path that ends with date in YYYY_MM_DD format</span>
+<span class="sd">    :type path_str: str</span>
+<span class="sd">    :returns: The date in YYYY-MM-DD sqlite datetime format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path_str</span> <span class="o">=</span> <span class="n">path_str</span><span
+            class="o">.</span><span class="n">replace</span><span class="p">(</span><span
+            class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span
+            class="p">)</span>
+    <span class="n">path_str</span> <span class="o">=</span> <span class="n">path_str</span><span
+            class="o">.</span><span class="n">split</span><span class="p">(</span><span
+            class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;-&quot;</span><span class="o">.</span><span
+            class="n">join</span><span class="p">(</span><span class="n">path_str</span><span class="o">.</span><span
+            class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span
+            class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span></div>
+
+
+<div class="viewcode-block" id="parse_day_queries"><a class="viewcode-back"
+                                                      href="../../../rst/db.schema.html#db.schema.parser.parse_day_queries">[docs]</a><span
+        class="k">def</span> <span class="nf">parse_day_queries</span><span class="p">(</span><span
+        class="n">path</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parsers all the .csv search queries for given day and inserts them into database</span>
+<span class="sd">    specified by conn.</span>
+
+<span class="sd">    :param path: The path with day&#39;s search_queries</span>
+<span class="sd">    :type path: str</span>
+<span class="sd">    :param conn: The connection to the database</span>
+<span class="sd">    :type conn: sqlite3.Connection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
+            class="n">cursor</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span
+            class="p">)</span> <span class="k">as</span> <span class="n">infile</span><span class="p">:</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">extract_date</span><span class="p">(</span><span
+            class="n">path</span><span class="p">)</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span
+            class="n">reader</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span
+            class="n">reader</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">category</span><span
+            class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="p">[</span><span
+            class="n">category</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span
+            class="n">category</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span
+            class="n">category</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span
+            class="n">date</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">search_queries_insert</span><span class="p">(</span><span
+            class="n">cursor</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span
+            class="n">record</span><span class="p">))</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="parse_queries"><a class="viewcode-back"
+                                                  href="../../../rst/db.schema.html#db.schema.parser.parse_queries">[docs]</a><span
+        class="k">def</span> <span class="nf">parse_queries</span><span class="p">(</span><span class="n">db_name</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses all the search queries for given month from 14th to the end of the month</span>
+<span class="sd">    ands inserts them into the database specified by db_name. The changes are commited</span>
+<span class="sd">    after inserting all the search queries from the month.</span>
+
+<span class="sd">    :param db_name: The name of the database</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">_sqlite3</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">(</span><span class="n">db_path</span> <span
+            class="o">+</span> <span class="n">db_name</span><span class="p">)</span>
+
+    <span class="c1"># Get the folder where the all files from given month are</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">search_queries_data_path</span><span class="o">.</span><span
+            class="n">replace</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span
+            class="n">db_name</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span
+            class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span
+            class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_01&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span
+            class="n">fsencode</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span
+            class="o">.</span><span class="n">listdir</span><span class="p">(</span><span
+            class="n">directory</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span
+            class="n">fsdecode</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span
+            class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">):</span>
+            <span class="c1"># TODO use absolute path</span>
+            <span class="n">parse_day_queries</span><span class="p">(</span><span class="nb">str</span><span
+            class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span
+            class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span
+            class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span
+            class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span
+            class="p">),</span> <span class="n">conn</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="fill_db"><a class="viewcode-back"
+                                            href="../../../rst/db.schema.html#db.schema.parser.fill_db">[docs]</a><span
+        class="k">def</span> <span class="nf">fill_db</span><span class="p">(</span><span class="n">db_name</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inserts all the data for given month into the database specified by the db_name.</span>
+
+<span class="sd">    :param db_name: The name of the database</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parse_categories</span><span class="p">(</span><span class="n">db_name</span><span
+            class="p">)</span>
+    <span class="n">parse_queries</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+    <span class="n">parse_ads</span><span class="p">(</span><span class="n">db_name</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="fill_all_dbs"><a class="viewcode-back"
+                                                 href="../../../rst/db.schema.html#db.schema.parser.fill_all_dbs">[docs]</a><span
+        class="k">def</span> <span class="nf">fill_all_dbs</span><span class="p">():</span>
+    <span class="k">return</span></div>
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Quick search</h3>
+                <form class="search" action="../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Go"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="related" role="navigation" aria-label="related navigation">
+    <h3>Navigation</h3>
+    <ul>
+        <li class="right" style="margin-right: 10px">
+            <a href="../../../genindex.html" title="General Index"
+            >index</a></li>
+        <li class="right">
+            <a href="../../../py-modindex.html" title="Python Module Index"
+            >modules</a> |
+        </li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">DataNinja 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../index.html">Module code</a> &#187;</li>
+    </ul>
+</div>
+<div class="footer" role="contentinfo">
+    &#169; Copyright 2017, Goodfellas.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+</div>
+</body>
+</html>

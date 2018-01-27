@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>db.schema.creation &#8212; DataNinja 1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css"/>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../genindex.html"/>
+    <link rel="search" title="Search" href="../../../search.html"/>
+</head>
+<body>
+<div class="related" role="navigation" aria-label="related navigation">
+    <h3>Navigation</h3>
+    <ul>
+        <li class="right" style="margin-right: 10px">
+            <a href="../../../genindex.html" title="General Index"
+               accesskey="I">index</a></li>
+        <li class="right">
+            <a href="../../../py-modindex.html" title="Python Module Index"
+            >modules</a> |
+        </li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">DataNinja 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
+    </ul>
+</div>
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+            <div class="body" role="main">
+
+                <h1>Source code for db.schema.creation</h1>
+                <div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">_sqlite3</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="k">import</span> <span class="n">db_path</span>
+
+
+<div class="viewcode-block" id="create_categories_table"><a class="viewcode-back"
+                                                            href="../../../rst/db.schema.html#db.schema.creation.create_categories_table">[docs]</a><span
+        class="k">def</span> <span class="nf">create_categories_table</span><span class="p">(</span><span
+        class="n">conn</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates table that holds all the product categories in sqlite database specified by conn.</span>
+
+<span class="sd">    :param conn: The connection to sqlite database.</span>
+<span class="sd">    :type conn: sqlite3.Connection.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
+            class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span
+            class="s2">&quot;&quot;&quot;CREATE TABLE categories (</span>
+<span class="s2">                       category_id integer primary key,</span>
+<span class="s2">                       name text not null,</span>
+<span class="s2">                       parent_id int default null)&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="create_ads_table"><a class="viewcode-back"
+                                                     href="../../../rst/db.schema.html#db.schema.creation.create_ads_table">[docs]</a><span
+        class="k">def</span> <span class="nf">create_ads_table</span><span class="p">(</span><span class="n">conn</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates table that holds ads from one month in sqlite database specified by conn.</span>
+
+<span class="sd">    :param conn: The connection to sqlite database.</span>
+<span class="sd">    :type conn: sqlite3.Connection.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
+            class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span
+            class="s2">&quot;&quot;&quot;CREATE TABLE ads (</span>
+<span class="s2">                               id integer primary key,</span>
+<span class="s2">                               region_id integer,</span>
+<span class="s2">                               category_id integer,</span>
+<span class="s2">                               subregion_id integer,</span>
+<span class="s2">                               district_id integer,</span>
+<span class="s2">                               city_id integer,</span>
+<span class="s2">                               accurate_location boolean,</span>
+<span class="s2">                               user_id,</span>
+<span class="s2">                               sorting_date datetime,</span>
+<span class="s2">                               created_at_first datetime,</span>
+<span class="s2">                               valid_to datetime,</span>
+<span class="s2">                               title text,</span>
+<span class="s2">                               description text,</span>
+<span class="s2">                               full_description text,</span>
+<span class="s2">                               has_phone boolean,</span>
+<span class="s2">                               params text,</span>
+<span class="s2">                               private_business boolean,</span>
+<span class="s2">                               has_person boolean,</span>
+<span class="s2">                               photo_sizes text,</span>
+<span class="s2">                               paidads_id_index integer,</span>
+<span class="s2">                               paidads_valid_to integer,</span>
+<span class="s2">                               predict_sold datetime,</span>
+<span class="s2">                               predict_replies integer,</span>
+<span class="s2">                               predict_views integer,</span>
+<span class="s2">                               reply_call integer,</span>
+<span class="s2">                               reply_sms integer,</span>
+<span class="s2">                               reply_chat integer,</span>
+<span class="s2">                               reply_call_intent integer,</span>
+<span class="s2">                               reply_chat_intent integer) </span>
+<span class="s2">                               &quot;&quot;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_search_queries_table"><a class="viewcode-back"
+                                                                href="../../../rst/db.schema.html#db.schema.creation.create_search_queries_table">[docs]</a><span
+        class="k">def</span> <span class="nf">create_search_queries_table</span><span class="p">(</span><span class="n">conn</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates table that holds all the search queries from one month</span>
+<span class="sd">    in sqlite database specified by connection.</span>
+
+<span class="sd">    :param conn: The connection to sqlite database.</span>
+<span class="sd">    :type conn: sqlite3.Connection.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span
+            class="n">cursor</span><span class="p">()</span>
+    <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span
+            class="s2">&quot;&quot;&quot;CREATE TABLE queries (</span>
+<span class="s2">                           phrase text,</span>
+<span class="s2">                           category_id text,</span>
+<span class="s2">                           session_count int,</span>
+<span class="s2">                           query_date datetime)&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="create_db"><a class="viewcode-back"
+                                              href="../../../rst/db.schema.html#db.schema.creation.create_db">[docs]</a><span
+        class="k">def</span> <span class="nf">create_db</span><span class="p">(</span><span class="n">conn</span><span
+        class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates ads, categories and queries tables in database specified by connection and</span>
+<span class="sd">    closes that connection.</span>
+
+<span class="sd">    :param conn: The connection to sqlite database.</span>
+<span class="sd">    :type conn: sqlite3.Connection.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">create_categories_table</span><span class="p">(</span><span class="n">conn</span><span
+            class="p">)</span>
+    <span class="n">create_ads_table</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+    <span class="n">create_search_queries_table</span><span class="p">(</span><span class="n">conn</span><span
+            class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="create_all_dbs"><a class="viewcode-back"
+                                                   href="../../../rst/db.schema.html#db.schema.creation.create_all_dbs">[docs]</a><span
+        class="k">def</span> <span class="nf">create_all_dbs</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates all databases for months from 2016_11 to 2017_10.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;2016_1#.db&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span
+            class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">db_path</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span
+            class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span
+            class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span
+            class="p">))</span>
+        <span class="n">create_db</span><span class="p">(</span><span class="n">_sqlite3</span><span
+            class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">path</span><span
+            class="p">))</span>
+
+    <span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;2017_0#.db&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span
+            class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span
+            class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">db_path</span> <span
+            class="o">+</span> <span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span
+            class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span
+            class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span
+            class="p">))</span>
+        <span class="n">create_db</span><span class="p">(</span><span class="n">_sqlite3</span><span
+            class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">path</span><span
+            class="p">))</span>
+
+    <span class="n">db_name</span> <span class="o">=</span> <span class="s1">&#39;2017_10.db&#39;</span>
+    <span class="n">create_db</span><span class="p">(</span><span class="n">_sqlite3</span><span class="o">.</span><span
+            class="n">connect</span><span class="p">(</span><span class="n">db_path</span> <span
+            class="o">+</span> <span class="n">db_name</span><span class="p">))</span></div>
+
+
+</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <div id="searchbox" style="display: none" role="search">
+                <h3>Quick search</h3>
+                <form class="search" action="../../../search.html" method="get">
+                    <div><input type="text" name="q"/></div>
+                    <div><input type="submit" value="Go"/></div>
+                    <input type="hidden" name="check_keywords" value="yes"/>
+                    <input type="hidden" name="area" value="default"/>
+                </form>
+            </div>
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="related" role="navigation" aria-label="related navigation">
+    <h3>Navigation</h3>
+    <ul>
+        <li class="right" style="margin-right: 10px">
+            <a href="../../../genindex.html" title="General Index"
+            >index</a></li>
+        <li class="right">
+            <a href="../../../py-modindex.html" title="Python Module Index"
+            >modules</a> |
+        </li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">DataNinja 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-1"><a href="../../index.html">Module code</a> &#187;</li>
+    </ul>
+</div>
+<div class="footer" role="contentinfo">
+    &#169; Copyright 2017, Goodfellas.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+</div>
+</body>
+</html>

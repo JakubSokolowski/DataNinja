@@ -1,0 +1,22 @@
+db\.queries package
+===================
+
+Submodules
+----------
+
+db\.queries\.insertions module
+------------------------------
+
+.. automodule:: db.queries.insertions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: db.queries
+    :members:
+    :undoc-members:
+    :show-inheritance:
