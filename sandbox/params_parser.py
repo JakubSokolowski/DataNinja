@@ -5,6 +5,7 @@ Created on Tue Dec  5 23:49:49 2017
 @author: Adrian
 """
 
+
 import _sqlite3
 import re
 
@@ -34,22 +35,20 @@ def ad_params(params):
     return params
 
 
-# command='SELECT params FROM ads LIMIT 100000'
+#command='SELECT params FROM ads LIMIT 100000'
 
 def all_params(command):
     params_counter = dict()
     for ad in cursor.execute(command):
         for param in ad_params(str(ad[0])):
             if param in params_counter:
-                params_counter[param] = params_counter[param] + 1
+                params_counter[param] = params_counter[param] +1
             else:
                 params_counter[param] = 1
     return (params_counter)
-
-
+            
 data = all_params(command)
 indexes = np.arange(len(data.keys()))
 plt.bar(indexes, data.values(), 0.2)
 plt.xticks(indexes, data.keys(), rotation=90)
 plt.show()
-￼

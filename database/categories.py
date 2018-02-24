@@ -1,10 +1,8 @@
 import _sqlite3
 import csv
-
 db_name = "/home/jakub/DataNinja/data/database/ads_2016_11_01.db"
 conn = _sqlite3.connect(db_name)
 cursor = conn.cursor()
-
 
 def create_categories_db():
     conn = _sqlite3.connect(db_name)
@@ -16,7 +14,6 @@ def create_categories_db():
     conn.commit()
     conn.close()
     return
-
 
 def add_new_category(entry):
     cursor.execute("""INSERT INTO categories VALUES(?,?,?)""", entry)
@@ -42,4 +39,4 @@ def parse_categories(filename):
     conn.commit()
     return
 
-# parse_categories(category_path)
+#parse_categories(category_path)

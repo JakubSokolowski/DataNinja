@@ -11,25 +11,23 @@ from datetime import time
 
 import numpy as np
 import pandas as pd
-from db.data.sampler import sample_ads
 from sandbox.params import params_parser
+
+from db.data.sampler import sample_ads
 
 conn = _sqlite3.connect('2016_11.db')
 data = sample_ads(conn, 1000)
-
 
 def db_to_csv(query):
     conn = _sqlite3.connect('2016_11.db')
     data = pd.read_sql_query(query, conn)
     data.to_csv('ads.csv', sep=';')
-
-
+ 
 def photos_parser(photo_sizes):
     photo_sizes = photo_sizes.replace('""', '"')
     data = json.loads(photo_sizes)
     num_of_photos = len(data)
     return (num_of_photos)
-
 
 def num_of_photos(data):
     all_photos = data['photo_sizes'].apply(str)
@@ -48,11 +46,9 @@ def time_since_creation(data):
     time_since_creation[time_since_creation < 0] = 0
     return (time_since_creation)
 
-
 def time_on_frontpage(data_sorted):
     time_on_frontpage = data['sorting_date'][39:len(data_sorted)]
     return (pd.DataFrame({'time_on_frontpage': time_on_frontpage}))
-
 
 def traffic_level(data):
     l = np.zeros(len(data))
@@ -64,7 +60,6 @@ def traffic_level(data):
     l[ones] = 1
     return (pd.DataFrame({'traffic_level': l}))
 
-
 def params_parser(params):
     par_list = re.split("<=>|<br>", params)
     parsed_params = dict()
@@ -73,7 +68,6 @@ def params_parser(params):
     for i in range(0, int((len(par_list) / 2))):
         parsed_params[par_list[2 * i]] = par_list[2 * i + 1]
     return parsed_params
-
 
 def params(data):
     price_type, price, state, Type = ([] for i in range(4))
@@ -101,16 +95,14 @@ def params(data):
                            'state': state,
                            'type': Type})
     return (params)
-
-
+   
 def promo_level(data):
     promo_lvl = np.zeros(len(data))
     promo_lvl[data['paidads_id_index'] == 3] = 1
     promo_lvl[data['paidads_id_index'] == 4] = 2
     promo_lvl[data['paidads_id_index'] == 85] = 3
     return (pd.DataFrame({'promotion_level': promo_lvl}))
-
-
+    
 ####################################################################
 def convert_data(query):
     conn = _sqlite3.connect('2016_11.db')

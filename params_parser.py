@@ -5,8 +5,6 @@ Created on Tue Dec  5 23:49:49 2017
 @author: Adrian
 """
 import re
-
-
 def params_parser(params):
     print(params)
     par_list = re.split("<=>|<br>", params)
@@ -23,7 +21,6 @@ d = params_parser(params)
 
 command = 'SELECT params FROM ads'
 import _sqlite3
-
 conn = _sqlite3.connect('ads_2016_11_01.db')
 cursor = conn.cursor()
 d = set()
