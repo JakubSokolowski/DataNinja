@@ -7,6 +7,7 @@ Created on Tue Nov 28 23:57:53 2017
 
 
 import _sqlite3
+
 from nltk.tokenize import word_tokenize
 
 conn = _sqlite3.connect('ads_2016_11_01.db')
