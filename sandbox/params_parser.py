@@ -9,11 +9,10 @@ Created on Tue Dec  5 23:49:49 2017
 import _sqlite3
 import re
 
-import matplotlib.pyplot as plt
-import numpy as np
 
 conn = _sqlite3.connect('2016_11.db')
 cursor = conn.cursor()
+
 
 def params_parser(params):
     par_list=re.split("<=>|<br>", params)
@@ -35,8 +34,6 @@ def ad_params(params):
     return params
 
 
-#command='SELECT params FROM ads LIMIT 100000'
-
 def all_params(command):
     params_counter = dict()
     for ad in cursor.execute(command):
@@ -45,10 +42,10 @@ def all_params(command):
                 params_counter[param] = params_counter[param] +1
             else:
                 params_counter[param] = 1
-    return (params_counter)
-            
-data = all_params(command)
-indexes = np.arange(len(data.keys()))
-plt.bar(indexes, data.values(), 0.2)
-plt.xticks(indexes, data.keys(), rotation=90)
-plt.show()
+    return params_counter
+
+# data = all_params(command)
+# indexes = np.arange(len(data.keys()))
+# plt.bar(indexes, data.values(), 0.2)
+# plt.xticks(indexes, data.keys(), rotation=90)
+# plt.show()

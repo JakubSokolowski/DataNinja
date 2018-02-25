@@ -15,6 +15,7 @@ from pathlib import Path
 main_data_path = str(Path(__file__).parents[2]) + "/data/"
 
 db_path = main_data_path + 'database/'
+model_path = main_data_path + 'model/'
 ads_data_path = main_data_path + 'ads/#/001_anonimized'
 search_queries_data_path = main_data_path + 'search_queries/#'
 categories_path = main_data_path + 'categories.csv'

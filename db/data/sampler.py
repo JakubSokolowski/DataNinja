@@ -20,7 +20,7 @@ def sample_ads(conn, size, random=False):
     return pd.read_sql_query(query, conn)
 
 
-def sample_queries(conn, size, random=True):
+def sample_queries(conn, size, random=False):
     """
         Returns sample of queries table specified by connection
         :param conn: Connection to sql database
