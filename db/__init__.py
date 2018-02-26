@@ -11,7 +11,7 @@ from pathlib import Path
 #                                  --> docs
 #                                  --> notebooks
 #                                  --> sandbox
-
+# Testing the aws commits
 main_data_path = str(Path(__file__).parents[2]) + "/data/"
 
 db_path = main_data_path + 'database/'
