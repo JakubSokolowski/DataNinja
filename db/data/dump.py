@@ -5,7 +5,7 @@ import pandas as pd
 from db import db_path
 from db import model_path
 
-conn = _sqlite3.connect(db_path + '2016_11.db')
+conn = _sqlite3.connect(db_path + '2016_12.db')
 cursor = conn.cursor()
 
 query = """SELECT 
@@ -26,7 +26,7 @@ query = """SELECT
                         predict_replies,
                         predict_sold,
                         predict_views
-                        from ads"""
+                        from ads limit 100000"""
 
 df = pd.read_sql_query(query, conn)
-df.to_csv(model_path + "model_raw.csv", index=False, sep=";")
+df.to_csv(model_path + "2016-12-raw.csv", index=False, sep=";")

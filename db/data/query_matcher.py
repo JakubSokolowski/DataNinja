@@ -132,13 +132,13 @@ def match_phrase_to_desc(conn):
                 ad_hit_count[search[1]] += q_session_count[word]
 
     df = pd.DataFrame({'keys': list(ad_hit_count.keys()), 'values': list(ad_hit_count.values())})
-    df.to_csv(model_path + "ad_hits.csv", index=False, sep=";")
+    df.to_csv(model_path + "2016_12_ad_hits.csv", index=False, sep=";")
 
 
 def match_browsing(conn):
     # Count the just browsing sessions
 
-    empty_searches = dict();
+    empty_searches = dict()
     cat_list = pd.read_sql_query("select category_id from categories", conn)['category_id'].tolist()
     empty_searches.update((k, 0) for k in cat_list)
 
@@ -158,7 +158,7 @@ def match_browsing(conn):
     ads['empty_sessions'] = pd.Series(sessions).values
     header = ["id", "empty_sessions"]
 
-    ads.to_csv(model_path + "empty_sessions.csv", columns=header, index=False, sep=";")
+    ads.to_csv(model_path + "2016_12_empty_sessions.csv", columns=header, index=False, sep=";")
     return
 
 
@@ -170,9 +170,11 @@ def sort_hits(name):
     print(df)
     df.to_csv(model_path + "sorted_ad_hits.csv", index=False, sep=";")
 
-conn = _sqlite3.connect(db_path + '2016_11.db')
+
+conn = _sqlite3.connect(db_path + '2016_12.db')
 start = time.time()
-sort_hits("ad_hits.csv")
+match_phrase_to_desc(conn)
+match_browsing(conn)
 end = time.time()
 
 print(end - start)
