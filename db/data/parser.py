@@ -16,6 +16,7 @@ from db import search_queries_data_path
 from db.data import col
 from db.data import drop_list
 from db.data import parsed_data_path
+from db.data import parsed_queries_path
 from db.data import raw_data_path
 
 
@@ -250,6 +251,24 @@ def parse_day_queries(path, conn):
     return
 
 
+def parse_queries_to_csv():
+    # Iterate over every month directory
+    for directory in os.listdir(search_queries_data_path):
+        name = directory[:-3]
+        fout = open(parsed_queries_path + name + ".csv", "a")
+        count = 0
+        for file in get_filenames(search_queries_data_path + directory):
+            count += 1
+            print(count)
+            with open(search_queries_data_path + directory + "/" + file) as day:
+                day.__next__()
+                for query in day:
+                    fout.write(query)
+        fout.close()
+    return
+
+
+
 def parse_queries(db_name):
     """
     Parses all the search queries for given month from 14th to the end of the month
@@ -287,3 +306,7 @@ def fill_db(db_name):
 
 def fill_all_dbs():
     return
+
+
+parse_queries_to_csv()
+# print([name for name in os.listdir(search_queries_data_path)])

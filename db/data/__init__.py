@@ -2,7 +2,7 @@ from pathlib import Path
 
 raw_data_path = str(Path(__file__).parents[3]) + "/months-data-raw/"
 parsed_data_path = str(Path(__file__).parents[3]) + "/months-data-parsed/"
-
+parsed_queries_path = str(Path(__file__).parents[3]) + "/queries-data-parsed/"
 # 1  id integer primary key,
 # 2  region_id integer,
 # 3  category_id integer,
