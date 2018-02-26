@@ -7,8 +7,7 @@ def find_month_data(month):
 
 
 def parse_all_months():
-    input
-    bucket
+    # Testing aws integration #2
     return
 
 
